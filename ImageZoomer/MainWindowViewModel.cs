@@ -34,15 +34,26 @@ internal sealed class MainWindowViewModel : BindableBase
     public BitmapSource? Bitmap
     {
         get => _bitmap;
-        private set => SetProperty(ref _bitmap, value);
+        private set
+        {
+            if (SetProperty(ref _bitmap, value))
+            {
+                // 画像更新の度にクリップボードに代入してみています
+                CopyToClipboard(_bitmap, ScaleValue);
+            }
+        }
     }
     private BitmapSource? _bitmap;
 
     public MainWindowViewModel() { }
 
-    public RelayCommand CopyCommand => new(() =>
+    public RelayCommand CopyCommand => new(() => CopyToClipboard(Bitmap, ScaleValue));
+
+    private void CopyToClipboard(BitmapSource? bitmap, int scaleValue)
     {
         _disposable?.Dispose();
-        _disposable = Bitmap?.CopyToClipboard(ScaleValue);
-    });
+
+        if (bitmap != null)
+            _disposable = bitmap?.CopyToClipboard(scaleValue);
+    }
 }

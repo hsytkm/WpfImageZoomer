@@ -6,7 +6,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:ImageZoomer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Quadruple the image"
+    Title="Image Zoomer"
     Width="500"
     Height="300"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
@@ -42,6 +42,15 @@
                 SmallChange="4"
                 Value="{Binding ScaleValue, Mode=TwoWay}" />
         </DockPanel>
-        <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Source="{Binding Bitmap, Mode=OneWay}" />
+
+        <Grid>
+            <TextBlock
+                Margin="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Dropping an image file here will copy the zoomed image to the clipboard."
+                TextWrapping="Wrap" />
+            <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Source="{Binding Bitmap, Mode=OneWay}" />
+        </Grid>
     </DockPanel>
 </Window>
